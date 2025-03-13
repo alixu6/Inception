@@ -10,13 +10,13 @@
 #                                                                              #
 # **************************************************************************** #
 
-DOCKER_COMPOSE = docker-compose -f srcs/docker-compose.yml
+DOCKER_COMPOSE = docker compose -f srcs/docker-compose.yml
 DOCKER = docker
 
 PROJECT_NAME = Inception
 
-build: clean
-	cp /home/axu/.env ./srcs/.env
+build:
+	cp /home/${USER}/.env ./srcs/.env
 	$(DOCKER_COMPOSE) up --build -d
 
 up:
@@ -28,6 +28,7 @@ down:
 clean:
 	$(DOCKER_COMPOSE) down --rmi all --volumes --remove-orphans || true
 	$(DOCKER) system prune -a --volumes -f || true
+	rm ./srcs/.env
 
 restart: down up
 
