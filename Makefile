@@ -16,6 +16,8 @@ DOCKER = docker
 PROJECT_NAME = Inception
 
 build:
+	mkdir -p ~/data/mariadb
+	mkdir -p ~/data/wordpress
 	cp /home/${USER}/.env ./srcs/.env
 	$(DOCKER_COMPOSE) up --build -d
 
@@ -29,6 +31,8 @@ clean:
 	$(DOCKER_COMPOSE) down --rmi all --volumes --remove-orphans || true
 	$(DOCKER) system prune -a --volumes -f || true
 	rm ./srcs/.env
+	sudo rm -rf ~/data/mariadb
+	sudo rm -rf ~/data/wordpress
 
 restart: down up
 

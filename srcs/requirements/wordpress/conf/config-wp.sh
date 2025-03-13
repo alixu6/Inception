@@ -16,31 +16,31 @@ if [ ! -d "/var/www/wordpress/wp-includes" ]; then
 fi
 
 if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
-    wp config create --allow-root \
-        --dbname="$SQL_DATABASE" \
-        --dbuser="$SQL_USER" \
-        --dbpass="$SQL_PASSWORD" \
-        --dbhost="mariadb:3306" \
-        --path='/var/www/wordpress'
-#     cat <<EOL > /var/www/wordpress/wp-config.php
-# <?php
+    # wp config create --allow-root \
+    #     --dbname="$SQL_DATABASE" \
+    #     --dbuser="$SQL_USER" \
+    #     --dbpass="$SQL_PASSWORD" \
+    #     --dbhost="mariadb:3306" \
+    #     --path='/var/www/wordpress'
+    cat <<EOL > /var/www/wordpress/wp-config.php
+<?php
 
-# define( 'DB_NAME', getenv('SQL_DATABASE') );
-# define( 'DB_USER', getenv('SQL_USER') );
-# define( 'DB_PASSWORD', getenv('SQL_PASSWORD') );
-# define( 'DB_HOST', 'mariadb:3306' );
-# define( 'DB_CHARSET', 'utf8' );
+define( 'DB_NAME', getenv('SQL_DATABASE') );
+define( 'DB_USER', getenv('SQL_USER') );
+define( 'DB_PASSWORD', getenv('SQL_PASSWORD') );
+define( 'DB_HOST', 'mariadb:3306' );
+define( 'DB_CHARSET', 'utf8' );
 
 
-# \$table_prefix = 'wp_';
+\$table_prefix = 'wp_';
 
-# define( 'WP_DEBUG', false );
+define( 'WP_DEBUG', false );
 
-# if ( !defined('ABSPATH') )
-#     define('ABSPATH', dirname(__FILE__) . '/');
+if ( !defined('ABSPATH') )
+    define('ABSPATH', dirname(__FILE__) . '/');
 
-# require_once(ABSPATH . 'wp-settings.php');
-# EOL
+require_once(ABSPATH . 'wp-settings.php');
+EOL
 fi
 
 if ! wp core is-installed --allow-root --path='/var/www/wordpress'; then
