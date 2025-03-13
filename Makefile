@@ -16,6 +16,7 @@ DOCKER = docker
 PROJECT_NAME = Inception
 
 build: clean
+	cp /home/axu/.env ./srcs/.env
 	$(DOCKER_COMPOSE) up --build -d
 
 up:

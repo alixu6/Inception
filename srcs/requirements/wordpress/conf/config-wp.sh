@@ -55,7 +55,9 @@ if ! wp core is-installed --allow-root --path='/var/www/wordpress'; then
 # if [ ! -d "/var/www/wordpress/wp-includes" ]; then
 # # #     wp core download --path="/var/www/wordpress" --allow-root
 #      wp core install --allow-root --url="https://axu.42.fr" --title="axu's wordpress" --admin_user="$ADMIN_USER" --admin_password="$ADMIN_PASSWORD" --path='/var/www/wordpress'
-
+    wp user create --allow-root \
+        "$USER_LOGIN" "$USER_EMAIL" \
+        --path='/var/www/wordpress'
 fi
 
 chown -R www-data:www-data /var/www/wordpress
