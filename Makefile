@@ -10,25 +10,33 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = PmergeMe
-SOURCES = main.cpp PmergeMe.cpp
-OBJECTS = $(SOURCES:.cpp=.o)
+DOCKER_COMPOSE = docker-compose -f srcs/docker-compose.yml
+DOCKER = docker
 
-CC = c++
-FLAGS = -Wall -Wextra -Werror -std=c++98
+PROJECT_NAME = Inception
 
-all:$(NAME)
+build: clean
+	$(DOCKER_COMPOSE) up --build -d
 
-$(NAME): $(OBJECTS)
-	$(CC) $(FLAGS) -o $@ $(OBJECTS)
+up:
+	$(DOCKER_COMPOSE) up -d
 
-%.o: %.cpp
-	$(CC) $(FLAGS) -c -o $@ $<
+down:
+	$(DOCKER_COMPOSE) down
 
 clean:
-	rm -f $(OBJECTS)
+	$(DOCKER_COMPOSE) down --rmi all --volumes --remove-orphans || true
+	$(DOCKER) system prune -a --volumes -f || true
 
-fclean: clean
-		rm -f $(NAME)
+restart: down up
 
-re: fclean all
+logs:
+	$(DOCKER_COMPOSE) logs -f
+
+ps:
+	$(DOCKER) ps -a
+
+images:
+	$(DOCKER) images
+
+all: build
