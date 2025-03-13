@@ -9,14 +9,17 @@ php-fpm \
 php-mysql \
 mariadb-client
 
-# RUN wget https://fr.wordpress.org/wordpress-6.7.2-fr_FR.tar.gz -P /var/www
+RUN wget https://fr.wordpress.org/wordpress-6.7.2-fr_FR.tar.gz -P /var/www
 
-# RUN cd /var/www && tar -xzf wordpress-6.7.2-fr_FR.tar.gz && rm wordpress-6.7.2-fr_FR.tar.gz
+RUN cd /var/www && tar -xzf wordpress-6.7.2-fr_FR.tar.gz && rm wordpress-6.7.2-fr_FR.tar.gz
 
 RUN mkdir -p /var/www/wordpress
 
-RUN chown -R root:root /var/www/wordpress
+#RUN chown -R root:root /var/www/wordpress
 
+RUN chown -R www-data:www-data /var/www/wordpress
+
+#RUN rm -f /usr/local/bin/wp
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
