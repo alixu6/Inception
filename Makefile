@@ -12,31 +12,44 @@
 
 DOCKER_COMPOSE = docker compose -f srcs/docker-compose.yml
 DOCKER = docker
+ENV = ./srcs/.env
 
-PROJECT_NAME = Inception
+NAME = Inception
 
-build:
-	mkdir -p ~/data/mariadb
-	mkdir -p ~/data/wordpress
-	cp /home/${USER}/.env ./srcs/.env
+all: $(NAME)
+
+$(ENV):
+	@if [ ! -f ./srcs/.env ]; then \
+		cp ~/.env ./srcs/; \
+	fi
+
+$(NAME): $(ENV)
+	mkdir -p ~/data/mariadb ~/data/wordpress
+	cp ~/.env ./srcs/
 	$(DOCKER_COMPOSE) up --build -d
 
-up:
+up: $(ENV)
 	$(DOCKER_COMPOSE) up -d
 
-down:
+down: $(ENV)
 	$(DOCKER_COMPOSE) down
 
-clean:
+clean: $(ENV)
+	$(DOCKER_COMPOSE) stop
+#	$(DOCKER_COMPOSE) down --remove-orphans || true
+#	$(DOCKER) system prune -f || true
+
+fclean: clean
 	$(DOCKER_COMPOSE) down --rmi all --volumes --remove-orphans || true
 	$(DOCKER) system prune -a --volumes -f || true
-	rm ./srcs/.env
-	sudo rm -rf ~/data/mariadb
-	sudo rm -rf ~/data/wordpress
+#	$(DOCKER) network prune -f || true
+	rm -f ./srcs/.env 
+	sudo rm -rf ~/data/mariadb ~/data/wordpress
 
-restart: down up
+start: $(ENV)
+	$(DOCKER_COMPOSE) start
 
-logs:
+logs: $(ENV)
 	$(DOCKER_COMPOSE) logs -f
 
 ps:
@@ -45,4 +58,13 @@ ps:
 images:
 	$(DOCKER) images
 
-all: build
+network:
+	$(DOCKER) network ls
+
+volume:
+	$(DOCKER) volume ls
+
+check: ps images network volume
+
+re: fclean all
+

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 mkdir -p /run/php
 
@@ -50,6 +50,7 @@ if ! wp core is-installed --allow-root --path='/var/www/wordpress'; then
         --admin_user="$ADMIN_USER" \
         --admin_password="$ADMIN_PASSWORD" \
         --admin_email="$ADMIN_EMAIL" \
+        --skip-email \
         --path='/var/www/wordpress'
 
 # if [ ! -d "/var/www/wordpress/wp-includes" ]; then
