@@ -30,6 +30,7 @@ define( 'DB_USER', getenv('SQL_USER') );
 define( 'DB_PASSWORD', getenv('SQL_PASSWORD') );
 define( 'DB_HOST', 'mariadb:3306' );
 define( 'DB_CHARSET', 'utf8' );
+define( 'DB_COLLATE', '' );
 
 
 \$table_prefix = 'wp_';

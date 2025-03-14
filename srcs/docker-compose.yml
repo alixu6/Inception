@@ -10,7 +10,7 @@ services:
       dockerfile: Dockerfile
     env_file: .env
     # environment:
-    #   - MYSQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
+    #   MYSQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
     #   - MYSQL_DATABASE: ${SQL_DATABASE}
     #   - MYSQL_USER: ${SQL_USER}
     #   - MYSQL_PASSWORD: ${SQL_PASSWORD}
